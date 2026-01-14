@@ -1,31 +1,77 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.vcxproj", "{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Debug|x64.ActiveCfg = Debug|x64
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Debug|x64.Build.0 = Debug|x64
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Debug|x86.ActiveCfg = Debug|Win32
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Debug|x86.Build.0 = Debug|Win32
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Release|x64.ActiveCfg = Release|x64
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Release|x64.Build.0 = Release|x64
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Release|x86.ActiveCfg = Release|Win32
-		{033A4E7F-5DCC-433C-99F5-CBD9AF92C509}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F5380263-1355-4200-BA2B-0D58A6DCB547}
-	EndGlobalSection
-EndGlobal
+﻿#include <iostream>
+#include <vector>
+#include <limits>
+#include "task.h"
+#include "calendar.h"
+#include "fileio.h"
+
+
+using namespace std;
+
+int main() {
+    vector<Task> tasks;
+    int x;
+    setlocale(LC_ALL, "Russian");
+    cout << "Проект: 'Календарь + планировщик задач' " << endl;
+    do {
+        cout << " " << endl;
+        setColor(6);
+        cout << "--------------М-Е-Н-Ю--------------";
+        setColor(14);
+        cout << "\n      1 - Добавить задачу\n      2 - Показать все задачи\n      3 - Удалить задачу\n      4 - Редактировать задачу\n"
+            << "      5 - Поиск задачи по дате\n      6 - Сортировка задач по дате\n      7 - Расчёт дня недели\n      8 - Печать календаря месяца\n      9 - Сохранить в файл\n      10 - Загрузка из файла\n      0 - Выход" << endl;
+        setColor(6);
+        cout << "-----------------------------------" << endl;
+        setColor(15);
+        while (true) {
+            cout << "Выберите цифру из меню: ";
+            cin >> x;
+            if (cin.fail() || x < 0 || x > 10) {
+                cout << "Ошибка! Введите число от 0 до 10!\n\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                break;
+            }
+        }
+
+        switch (x) {
+        case 1:
+            dobavlenie(tasks);
+            break;
+        case 2:
+            pokazat(tasks);
+            break;
+        case 3:
+            ydalenue(tasks);
+            break;
+        case 4:
+            redaktor(tasks);
+            break;
+        case 5:
+            pouck(tasks);
+            break;
+        case 6:
+            sorturovka(tasks);
+            break;
+        case 7:
+            vivod_rachet_day_nedelu();
+            break;
+        case 8:
+            pechat_calendar();
+            break;
+        case 9:
+            coxranenie(tasks);
+            break;
+        case 10:
+            zagruzka_zadach_isfile(tasks);
+            break;
+        }
+
+    } while (x != 0);
+
+    return 0;
+}
+
